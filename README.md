@@ -2,14 +2,15 @@
 
 
 ## Starting instructions
-* install python 3.9
-Start command `python manage.py`
+* Install python 3.8 or greater
+* Start a new terminal (or venv), and run command `python manage.py`
 
 To view optional arguments, use `python manage.py -h`
 
 ## Model notes 
 
-Database schema will not be created automatically, but a class with functions to create the DDL is in:
- * db.models.PSQLDriver
+Database schema will be created automatically (if installing postgres):
+ * `db.models.PSQLDriver`
+ * `python manage.py --create_tables`
 
 In order to properly store the data in normalized form (i.e. no columns with lists), 3 tables are recommended.
