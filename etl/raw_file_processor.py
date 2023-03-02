@@ -116,7 +116,7 @@ class RawFileProcessor(ImeiValidator):
                 inventory[sku] = inventory[sku] + value if sku in inventory.keys() else value
             except KeyError:
                 self.logger.warning(f"invalid event found {event}")
-                self.errors.append({'record': {'imei': k, **v}, 'exception': EventCodeException(event)})
+                self.errors.append({'record': item, 'exception': EventCodeException(event)})
 
         return inventory
 
