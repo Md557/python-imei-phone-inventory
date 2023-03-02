@@ -1,4 +1,7 @@
 class ImeiValidator:
+    """
+    Borrowed and lightly-modified from https://www.geeksforgeeks.org/program-check-valid-imei-number/
+    """
     @staticmethod
     def sumDig(n):
         a = 0
