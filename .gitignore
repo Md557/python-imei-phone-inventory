@@ -1,0 +1,7 @@
+instructions.docx
+# cache
+/__pycache__
+db/__pycache__
+etl/__pycache__
+input/__pycache__
+utils/__pycache__
