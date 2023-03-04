@@ -27,7 +27,7 @@ if __name__ == '__main__':
         logger.error('your log level is set too high - you may miss important results.  Suggest info (20) or lower')
 
     if args.create_tables:
-        db_driver = PSQLDriver()
+        db_driver = PSQLDriver(log_level=args.log_level)
         db_driver.create_table1()
         db_driver.create_table2()
         db_driver.create_table3()

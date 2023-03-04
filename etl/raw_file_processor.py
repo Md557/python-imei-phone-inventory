@@ -36,7 +36,6 @@ class RawFileProcessor(ImeiValidator):
 
 
     def read_raw_stream(self):
-        self.logger.setLevel(logging.DEBUG)
         with open(self.path, newline='\r\n') as f:
             data = f.readlines()
         if not data:
@@ -58,9 +57,8 @@ class RawFileProcessor(ImeiValidator):
         for line in data:
             if not line:
                 if not imei:
-                    self.logger.warning(f"warning, no imei to store - skipping record, faults={fault_codes}")
+                    self.logger.warning(f"no imei to store - skipping line")
                     continue
-                valid_imei = self.validate_IMEI(imei)
                 records.append({
                     'imei': imei,
                     'valid_imei': valid_imei,
@@ -83,7 +81,8 @@ class RawFileProcessor(ImeiValidator):
                     fault_codes[int(fault_code)] = description
                 else:
                     [event, imei, sku] = line.split(' ')
-                    if not self.validate_IMEI(imei):
+                    valid_imei = self.validate_IMEI(imei)
+                    if not valid_imei:
                         raise InvalidIMEIException(imei)
                 if fault_code:
                     self.logger.debug(f"fault: {fault_code}, {description}")
@@ -92,7 +91,6 @@ class RawFileProcessor(ImeiValidator):
             except Exception as e:
                 self.logger.warning(f"Exception {e} occurred - continuing")
                 self.errors.append({'record': line, 'exception': e})
-                continue
 
         for item in records:
             self.logger.debug(f"{item}\n")
@@ -109,6 +107,7 @@ class RawFileProcessor(ImeiValidator):
             event = item['event']
             sku = item['sku']
             if item['faults']:
+                # could also update, i.e. self.fault_codes.update(item['faults'])
                 for k, v in item['faults'].items():
                     self.fault_codes[k] = v
             try:
