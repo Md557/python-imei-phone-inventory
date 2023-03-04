@@ -52,6 +52,7 @@ class RawFileProcessor(ImeiValidator):
         event = None
         imei = None
         sku = None
+        valid_imei = None
         records = list()
         fault_codes = dict()
         for line in data:
@@ -67,7 +68,7 @@ class RawFileProcessor(ImeiValidator):
                     'description': description,
                     'faults': fault_codes,
                 })
-                fault_code, description, event, imei, sku = None, None, None, None, None
+                fault_code, description, event, imei, sku, valid_imei = None, None, None, None, None, None
                 fault_codes = dict()
                 continue
             try:
